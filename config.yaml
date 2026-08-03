@@ -2,9 +2,9 @@ model_list:
 
   # ========== 🏠 Local (Grátis) ==========
   
-  - model_name: "Qwen 3.5 (free local)"
+  - model_name: "Qwen 2.5 Coder (free local)"
     litellm_params:
-      model: ollama/qwen3.5:9b-mlx
+      model: ollama/qwen2.5-coder:14b
       api_base: http://host.docker.internal:11434
       supports_function_calling: false
       extra_body:
