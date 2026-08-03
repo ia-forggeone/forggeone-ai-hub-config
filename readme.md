@@ -1,201 +1,99 @@
-text
-
-Recolher
-Salvar
-Copiar
-1
-README.md
-Coloque o arquivo na raiz do seu projeto, junto com setup.sh, setup.ps1 e config.yaml.
-O arquivo gerado utiliza o provedor ia-hub e, no macOS, o provedor local mac-ollama conforme a configuração do OpenCode 
-opencode.jsonc
-.
-
-markdown
-
-Recolher
-Salvar
-Copiar
-1
-2
-3
-4
-5
-6
-7
-8
-⌄
-⌄
 # ForgegOne AI Hub Config
 
 Scripts para instalar e gerar automaticamente o arquivo de configuração do [OpenCode](https://opencode.ai), utilizando os modelos definidos no arquivo `config.yaml` deste repositório.
 
-A configuração gerada utiliza o provedor compatível com OpenAI do IA Hub, com URL padrão:
+A configuração gerada utiliza o provedor compatível com OpenAI do **IA Hub** (com URL padrão `http://ia-hub.local:4000/v1`). No macOS, o modelo local do Ollama também é configurado através do provedor **mac-ollama** (`http://ia-hub.local:11434/v1`).
+
+---
+
+## 📌 Funcionalidades
+
+- **Multiplataforma:** Detecta automaticamente Linux, macOS e Windows (suporta PowerShell, Git Bash e WSL).
+- **Sem Dependências Externas:** Não depende de Python, PyYAML ou `jq`.
+- **Automação:** Baixa o `config.yaml` do repositório, identifica os modelos da `model_list` e gera/substitui o `opencode.jsonc`.
+- **Segurança & Backup:** Cria backup automático da configuração anterior com carimbo de data/hora.
+- **Gestão de Provedores:** Separa modelos remotos e locais (configurando o Ollama local apenas no macOS).
+- **Setup Inteligente:** Cria automaticamente a pasta de configuração do OpenCode caso não exista.
+
+---
+
+## 📁 Estrutura do Projeto
 
 ```text
-http://ia-hub.local:4000/v1
-No macOS, o modelo local do Ollama também é configurado através do provedor mac-ollama:
-
-text
-
-Recolher
-Salvar
-Copiar
-1
-http://ia-hub.local:11434/v1
-Funcionalidades
-Detecta automaticamente Linux, macOS e Windows.
-Suporta Linux, macOS, Windows PowerShell, Git Bash e WSL.
-Não depende de Python.
-Não depende de PyYAML.
-Não depende de jq.
-Baixa automaticamente o config.yaml do repositório.
-Identifica os modelos configurados em model_list.
-Gera ou substitui o arquivo opencode.jsonc.
-Cria backup automático da configuração anterior.
-Separa modelos remotos e locais.
-Configura o Ollama local somente no macOS.
-Cria automaticamente a pasta de configuração do OpenCode.
-Estrutura do projeto
-text
-
-Recolher
-Salvar
-Copiar
-1
-2
-3
-4
-5
 .
 ├── config.yaml
 ├── setup.sh
 ├── setup.ps1
 └── README.md
-Instalação rápida
-Linux e macOS
-Execute:
+```
 
-bash
+> **Nota:** Coloque o arquivo `README.md` na raiz do seu projeto, junto com `setup.sh`, `setup.ps1` e `config.yaml`.
 
-Recolher
-Salvar
-Copiar
-1
+---
+
+## 🚀 Instalação Rápida
+
+### Linux e macOS
+
+Execute o comando abaixo no terminal:
+
+```bash
 curl -fsSL https://raw.githubusercontent.com/ia-forggeone/forggeone-ai-hub-config/refs/heads/main/setup.sh | bash
-O script irá:
+```
 
-Detectar o sistema operacional;
-Baixar o config.yaml;
-Ler a lista de modelos;
-Criar um backup da configuração existente;
-Gerar o arquivo do OpenCode;
-Salvar a nova configuração no caminho correto.
-Windows PowerShell
-Execute:
+**O que o script faz:**
+1. Detecta o sistema operacional;
+2. Baixa o `config.yaml`;
+3. Lê a lista de modelos;
+4. Cria um backup da configuração existente;
+5. Gera o arquivo do OpenCode;
+6. Salva a nova configuração no caminho correto.
 
-powershell
+### Windows PowerShell
 
-Recolher
-Salvar
-Copiar
-1
+No PowerShell, execute:
+
+```powershell
 Set-ExecutionPolicy -Scope Process Bypass; irm https://raw.githubusercontent.com/ia-forggeone/forggeone-ai-hub-config/refs/heads/main/setup.ps1 | iex
-Para PowerShell 7:
+```
 
-powershell
+Para **PowerShell 7**:
 
-Recolher
-Salvar
-Copiar
-1
+```powershell
 pwsh -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/ia-forggeone/forggeone-ai-hub-config/refs/heads/main/setup.ps1 | iex"
-A alteração da política de execução vale somente para a sessão atual do PowerShell.
+```
 
-Caminhos dos arquivos
-SISTEMA
-CAMINHO PADRÃO
-Linux
-~/.config/opencode/opencode.jsonc
-macOS
-~/.config/opencode/opencode.jsonc
-Windows
-%APPDATA%\opencode\opencode.jsonc
-O nome padrão utilizado pelo OpenCode é:
+*A alteração da política de execução vale somente para a sessão atual.*
 
-text
+---
 
-Recolher
-Salvar
-Copiar
-1
-opencode.jsonc
-Caso já exista um arquivo chamado config.jsonc e não exista opencode.jsonc, o script poderá utilizar o arquivo config.jsonc existente.
+## 📍 Caminhos dos Arquivos
 
-Backup automático
-Antes de substituir uma configuração existente, o instalador cria um backup com data e hora.
+| Sistema | Caminho Padrão |
+| :--- | :--- |
+| **Linux** | `~/.config/opencode/opencode.jsonc` |
+| **macOS** | `~/.config/opencode/opencode.jsonc` |
+| **Windows** | `%APPDATA%\opencode\opencode.jsonc` |
 
-Exemplo:
+> O nome padrão utilizado é `opencode.jsonc`. Caso já exista um arquivo chamado `config.jsonc` e não exista `opencode.jsonc`, o script utilizará o `config.jsonc` existente.
 
-text
+### 💾 Backup Automático
 
-Recolher
-Salvar
-Copiar
-1
-opencode.jsonc.backup.20260401-153000
-Assim, é possível restaurar a configuração anterior caso necessário.
+Antes de substituir uma configuração existente, o instalador cria um backup com data e hora.  
+**Exemplo:** `opencode.jsonc.backup.20260401-153000`
 
-Configuração padrão
-text
+---
 
-Recolher
-Salvar
-Copiar
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-IA Hub:
-http://ia-hub.local:4000/v1
+## ⚙️ Configuração Padrão
 
-Chave da IA Hub:
-sk-hub-ia-key
+- **IA Hub:** `http://ia-hub.local:4000/v1` (Chave: `sk-hub-ia-key`)
+- **Ollama:** `http://ia-hub.local:11434/v1` (Chave: `ollama`)
 
-Ollama:
-http://ia-hub.local:11434/v1
+### Estrutura do `config.yaml`
 
-Chave do Ollama:
-ollama
-Modelos
-Os modelos são lidos automaticamente do arquivo config.yaml.
+Os modelos são lidos automaticamente do arquivo `config.yaml`. O formato esperado é:
 
-O formato esperado é:
-
-yaml
-
-Recolher
-Salvar
-Copiar
-1
-2
-3
-4
-5
-6
-7
-8
-⌄
-⌄
-⌄
-⌄
-⌄
+```yaml
 model_list:
   - model_name: "$ DeepSeek V4 Pro"
     litellm_params:
@@ -204,173 +102,72 @@ model_list:
   - model_name: "Qwen 3.5 (free local)"
     litellm_params:
       model: ollama/qwen3.5:9b-mlx
-Modelos cujo campo model começa com:
+```
 
-text
+- Modelos cujo campo `model` começa com `ollama/` são considerados **modelos locais**.
+- Os demais modelos são considerados **remotos** e ficam disponíveis através do provedor `ia-hub`.
 
-Recolher
-Salvar
-Copiar
-1
-ollama/
-são considerados modelos locais.
+---
 
-Os demais modelos são considerados modelos remotos e ficam disponíveis através do provedor:
+## 💻 Comportamento por Sistema Operacional
 
-text
+- **Linux:** Configura apenas modelos remotos via IA Hub. O Ollama local não é adicionado automaticamente.
+- **macOS:** Configura modelos remotos via IA Hub e modelos locais via Ollama (provedor chamado `mac-ollama`).
+- **Windows:** Suporta execução nativa via PowerShell ou via Git Bash / WSL executando o `setup.sh`.
 
-Recolher
-Salvar
-Copiar
-1
-ia-hub
-Comportamento por sistema operacional
-Linux
-No Linux, o script configura os modelos remotos através do IA Hub.
+---
 
-O modelo local do Ollama não é adicionado automaticamente ao OpenCode.
+## 🔧 Personalizando as URLs e Chaves
 
-macOS
-No macOS, o script configura:
+### Linux e macOS
 
-Modelos remotos através do IA Hub;
-Modelos locais através do Ollama.
-O provedor local será chamado:
-
-text
-
-Recolher
-Salvar
-Copiar
-1
-mac-ollama
-Windows
-No Windows, utilize o script PowerShell:
-
-powershell
-
-Recolher
-Salvar
-Copiar
-1
-Set-ExecutionPolicy -Scope Process Bypass; irm https://raw.githubusercontent.com/ia-forggeone/forggeone-ai-hub-config/refs/heads/main/setup.ps1 | iex
-Também é possível executar o setup.sh pelo Git Bash ou WSL:
-
-bash
-
-Recolher
-Salvar
-Copiar
-1
-curl -fsSL https://raw.githubusercontent.com/ia-forggeone/forggeone-ai-hub-config/refs/heads/main/setup.sh | bash
-Personalizando as URLs
-Linux e macOS
-bash
-
-Recolher
-Salvar
-Copiar
-1
-2
-3
-4
-5
-6
+```bash
 export IA_HUB_BASE_URL="http://192.168.1.100:4000/v1"
 export IA_HUB_API_KEY="minha-chave"
 export OLLAMA_BASE_URL="http://192.168.1.100:11434/v1"
 export OLLAMA_API_KEY="ollama"
 
 curl -fsSL https://raw.githubusercontent.com/ia-forggeone/forggeone-ai-hub-config/refs/heads/main/setup.sh | bash
-Também é possível executar o script localmente:
+```
 
-bash
+Para execução local do script:
 
-Recolher
-Salvar
-Copiar
-1
-2
-3
-4
-IA_HUB_BASE_URL="http://192.168.1.100:4000/v1" \
-IA_HUB_API_KEY="minha-chave" \
-OLLAMA_BASE_URL="http://192.168.1.100:11434/v1" \
-./setup.sh
-Windows PowerShell
-powershell
+```bash
+IA_HUB_BASE_URL="http://192.168.1.100:4000/v1" IA_HUB_API_KEY="minha-chave" OLLAMA_BASE_URL="http://192.168.1.100:11434/v1" ./setup.sh
+```
 
-Recolher
-Salvar
-Copiar
-1
-2
-3
-4
-5
-6
+### Windows PowerShell
+
+```powershell
 $env:IA_HUB_BASE_URL = "http://192.168.1.100:4000/v1"
 $env:IA_HUB_API_KEY = "minha-chave"
 $env:OLLAMA_BASE_URL = "http://192.168.1.100:11434/v1"
 $env:OLLAMA_API_KEY = "ollama"
 
 irm https://raw.githubusercontent.com/ia-forggeone/forggeone-ai-hub-config/refs/heads/main/setup.ps1 | iex
-Atualizando a configuração
-Após alterar o config.yaml, execute novamente o instalador.
+```
 
-Linux e macOS
-bash
+---
 
-Recolher
-Salvar
-Copiar
-1
-curl -fsSL https://raw.githubusercontent.com/ia-forggeone/forggeone-ai-hub-config/refs/heads/main/setup.sh | bash
-Windows
-powershell
+## 🔄 Atualizando a Configuração
 
-Recolher
-Salvar
-Copiar
-1
-Set-ExecutionPolicy -Scope Process Bypass; irm https://raw.githubusercontent.com/ia-forggeone/forggeone-ai-hub-config/refs/heads/main/setup.ps1 | iex
-A configuração anterior será salva automaticamente em um arquivo de backup.
+Após alterar o `config.yaml`, basta reexecutar o instalador. A configuração anterior será salva automaticamente no backup.
 
-Segurança
-Os comandos de instalação executam scripts baixados diretamente do GitHub.
+---
 
-Antes de utilizá-los em produção, revise os arquivos:
+## 🛡️ Segurança
 
-setup.sh;
-setup.ps1;
-config.yaml.
-Linux e macOS
-Para baixar e revisar o script antes de executá-lo:
+Recomenda-se revisar os scripts antes de executá-los diretamente da internet:
 
-bash
-
-Recolher
-Salvar
-Copiar
-1
-2
-3
+### Linux e macOS
+```bash
 curl -fsSL https://raw.githubusercontent.com/ia-forggeone/forggeone-ai-hub-config/refs/heads/main/setup.sh -o setup.sh
 less setup.sh
 bash setup.sh
-Windows PowerShell
-powershell
+```
 
-Recolher
-Salvar
-Copiar
-1
-2
-3
-4
-5
-6
-7
+### Windows PowerShell
+```powershell
 Invoke-WebRequest `
   -Uri "https://raw.githubusercontent.com/ia-forggeone/forggeone-ai-hub-config/refs/heads/main/setup.ps1" `
   -OutFile setup.ps1
@@ -378,98 +175,39 @@ Invoke-WebRequest `
 Get-Content .\setup.ps1
 Set-ExecutionPolicy -Scope Process Bypass
 .\setup.ps1
-Requisitos
-Linux e macOS
-Bash;
-curl ou wget;
-awk;
-acesso à internet.
-Essas ferramentas normalmente já estão disponíveis nesses sistemas.
+```
 
-Windows
-Windows PowerShell 5.1 ou PowerShell 7;
-acesso à internet.
-Não é necessário instalar:
+---
 
-Python;
-PyYAML;
-jq;
-Node.js;
-Git.
-Solução de problemas
-O arquivo não foi encontrado pelo OpenCode
-Confirme se o arquivo foi gerado no local correto:
+## 📋 Requisitos
 
-text
+### Linux e macOS
+- Bash
+- `curl` ou `wget`
+- `awk`
+- Conexão com a internet
 
-Recolher
-Salvar
-Copiar
-1
-2
-Linux/macOS:
-~/.config/opencode/opencode.jsonc
-text
+### Windows
+- Windows PowerShell 5.1 ou PowerShell 7
+- Conexão com a internet
 
-Recolher
-Salvar
-Copiar
-1
-2
-Windows:
-%APPDATA%\opencode\opencode.jsonc
-Também verifique se a versão instalada do OpenCode utiliza opencode.jsonc ou config.jsonc.
+*(Não requer Python, PyYAML, jq, Node.js ou Git).*
 
-O IA Hub não responde
-Verifique se o endereço está acessível:
+---
 
-bash
+## ❓ Solução de Problemas
 
-Recolher
-Salvar
-Copiar
-1
-curl http://ia-hub.local:4000/v1
-Se estiver utilizando outro servidor, execute o script com uma URL personalizada.
+1. **O arquivo não foi encontrado pelo OpenCode**
+   - Confirme se o arquivo foi gerado em `~/.config/opencode/opencode.jsonc` (Linux/macOS) ou `%APPDATA%\opencode\opencode.jsonc` (Windows).
+   - Verifique se a sua versão do OpenCode exige `opencode.jsonc` ou `config.jsonc`.
 
-O Ollama não responde no macOS
-Verifique se o Ollama está em execução:
+2. **O IA Hub não responde**
+   - Teste a conectividade: `curl http://ia-hub.local:4000/v1`
+   - Se estiver em outro servidor, ajuste a variável de ambiente `IA_HUB_BASE_URL`.
 
-bash
+3. **O Ollama não responde no macOS**
+   - Verifique o status: `curl http://ia-hub.local:11434/v1/models`
+   - Se necessário, altere para localhost: `export OLLAMA_BASE_URL="http://localhost:11434/v1"` e execute o setup novamente.
 
-Recolher
-Salvar
-Copiar
-1
-curl http://ia-hub.local:11434/v1/models
-Se necessário:
-
-bash
-
-Recolher
-Salvar
-Copiar
-1
-export OLLAMA_BASE_URL="http://localhost:11434/v1"
-Depois execute o instalador novamente.
-
-Nenhum modelo foi encontrado
-Confira se o config.yaml possui a estrutura esperada:
-
-yaml
-
-Recolher
-Salvar
-Copiar
-1
-2
-3
-4
-⌄
-⌄
-⌄
-model_list:
-  - model_name: "Nome do modelo"
-    litellm_params:
-      model: provedor/modelo
-O script foi desenvolvido para esse formato específico.
+4. **Nenhum modelo foi encontrado**
+   - Garanta que o `config.yaml` contenha a chave `model_list` formatada corretamente.
