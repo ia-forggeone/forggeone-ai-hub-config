@@ -1,0 +1,92 @@
+model_list:
+
+  # ========== 🏠 Local (Grátis) ==========
+  
+  - model_name: "Qwen 3.5 (free local)"
+    litellm_params:
+      model: ollama/qwen3.5:9b-mlx
+      api_base: http://host.docker.internal:11434
+      supports_function_calling: false
+      extra_body:
+        think: false
+
+  # ========== $ (Baratos) ==========
+  
+  - model_name: "$ DeepSeek V4 Pro"
+    litellm_params:
+      model: openrouter/deepseek/deepseek-v4-pro
+      api_key: "os.environ/OPENROUTER_API_KEY"
+      supports_function_calling: true
+
+  - model_name: "$ MiniMax M3"
+    litellm_params:
+      model: openrouter/minimax/minimax-m3
+      api_key: "os.environ/OPENROUTER_API_KEY"
+      supports_function_calling: true
+
+  - model_name: "$ Mimo V2.5 Pro"
+    litellm_params:
+      model: openrouter/xiaomi/mimo-v2.5-pro
+      api_key: "os.environ/OPENROUTER_API_KEY"
+      supports_function_calling: true
+
+  - model_name: "$ GPT-OSS 120B"
+    litellm_params:
+      model: openrouter/openai/gpt-oss-120b
+      api_key: "os.environ/OPENROUTER_API_KEY"
+      supports_function_calling: true
+
+  # ========== $$ (Intermediários) ==========
+  
+  - model_name: "$$ Qwen 3.7 Plus"
+    litellm_params:
+      model: openrouter/qwen/qwen3.7-plus
+      api_key: "os.environ/OPENROUTER_API_KEY"
+      supports_function_calling: true
+
+  - model_name: "$$ GLM 5.2"
+    litellm_params:
+      model: openrouter/z-ai/glm-5.2
+      api_key: "os.environ/OPENROUTER_API_KEY"
+      supports_function_calling: true
+
+  # ========== $$$ (Caros) ==========
+  
+  - model_name: "$$$ Kimi K3"
+    litellm_params:
+      model: openrouter/moonshotai/kimi-k3
+      api_key: "os.environ/OPENROUTER_API_KEY"
+      supports_function_calling: true
+
+  - model_name: "$$$ Grok 4.5"
+    litellm_params:
+      model: openrouter/x-ai/grok-4.5
+      api_key: "os.environ/OPENROUTER_API_KEY"
+      supports_function_calling: true
+
+  - model_name: "$$$ Claude Sonnet 5"
+    litellm_params:
+      model: openrouter/anthropic/claude-sonnet-5
+      api_key: "os.environ/OPENROUTER_API_KEY"
+      supports_function_calling: true
+
+  - model_name: "$$$ GPT 5.6 Terra Pro"
+    litellm_params:
+      model: openrouter/openai/gpt-5.6-terra-pro
+      api_key: "os.environ/OPENROUTER_API_KEY"
+      supports_function_calling: true
+
+
+# litellm_settings na raiz do documento
+litellm_settings:
+  drop_params: true
+  request_timeout: 120
+  cache: false
+  max_parallel_requests: 50
+  hide_secrets: true
+
+# Rate limiting por usuário
+router_settings:
+  routing_strategy: simple-shuffle
+  num_retries: 2
+  timeout: 120
