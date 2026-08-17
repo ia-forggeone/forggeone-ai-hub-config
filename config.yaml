@@ -1,15 +1,5 @@
 model_list:
 
-  # ========== 🏠 Local (Grátis) ==========
-  
-  - model_name: "Qwen 2.5 Coder (free local)"
-    litellm_params:
-      model: ollama/qwen2.5-coder:14b
-      api_base: http://host.docker.internal:11434
-      supports_function_calling: false
-      extra_body:
-        think: false
-
   # ========== $ (Baratos) ==========
   
   - model_name: "$ DeepSeek V4 Pro"
